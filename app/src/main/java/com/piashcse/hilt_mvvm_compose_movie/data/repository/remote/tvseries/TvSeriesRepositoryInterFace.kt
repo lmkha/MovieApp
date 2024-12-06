@@ -1,6 +1,7 @@
 package com.piashcse.hilt_mvvm_compose_movie.data.repository.remote.tvseries
 
 import androidx.paging.PagingData
+import com.piashcse.hilt_mvvm_compose_movie.data.model.MovieItem
 import com.piashcse.hilt_mvvm_compose_movie.data.model.SearchBaseModel
 import com.piashcse.hilt_mvvm_compose_movie.data.model.TvSeriesItem
 import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
@@ -17,4 +18,5 @@ interface TvSeriesRepositoryInterFace {
     suspend fun tvSeriesDetail(seriesId: Int): Flow<DataState<TvSeriesDetail>>
     suspend fun recommendedTvSeries(seriesId: Int): Flow<DataState<List<TvSeriesItem>>>
     suspend fun artistDetail(personId: Int): Flow<DataState<Artist>>
+    fun genrePagingDataSource(genreId: String): Flow<PagingData<TvSeriesItem>>
 }

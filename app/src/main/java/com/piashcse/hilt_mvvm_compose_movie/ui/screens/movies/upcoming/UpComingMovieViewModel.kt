@@ -24,6 +24,9 @@ class UpComingMovieViewModel @Inject constructor(val repo: MovieRepository) : Vi
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val upcomingMovies = filterData.flatMapLatest {
-        repo.upcomingMoviePagingDataSource(it?.genreId)
+        if (it?.genreId == null) {
+            repo.upcomingMoviePagingDataSource(it?.genreId)
+        } else
+            repo.genrePagingDataSource(it?.genreId.toString())
     }.cachedIn(viewModelScope)
 }

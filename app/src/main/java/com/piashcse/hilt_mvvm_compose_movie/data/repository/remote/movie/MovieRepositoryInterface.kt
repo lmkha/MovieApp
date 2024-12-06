@@ -14,7 +14,7 @@ interface MovieRepositoryInterface {
     suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>>
     suspend fun recommendedMovie(movieId: Int): Flow<DataState<List<MovieItem>>>
     suspend fun movieSearch(searchKey: String): Flow<DataState<SearchBaseModel>>
-    suspend fun genreList(): Flow<DataState<Genres>>
+    suspend fun genreList(isTvSeries: Boolean): Flow<DataState<Genres>>
     suspend fun movieCredit(movieId: Int): Flow<DataState<Artist>>
     suspend fun artistDetail(personId: Int): Flow<DataState<ArtistDetail>>
     fun nowPlayingMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>

@@ -3,6 +3,7 @@ package com.piashcse.hilt_mvvm_compose_movie.ui.screens.movies.nowplaying
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -25,7 +26,10 @@ class NowPlayingMovieViewModel @Inject constructor(val repo: MovieRepository) : 
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val nowPlayingMovies = filterData.flatMapLatest {
-        repo.nowPlayingMoviePagingDataSource(it?.genreId)
+        if (it?.genreId == null) {
+            repo.nowPlayingMoviePagingDataSource(it?.genreId)
+        } else
+        repo.genrePagingDataSource(it?.genreId.toString())
     }.cachedIn(viewModelScope)
 
 }

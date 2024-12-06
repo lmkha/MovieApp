@@ -28,9 +28,9 @@ class MainViewModel @Inject constructor(private val movieRepo: MovieRepository, 
     val movieSearchData: MutableState<DataState<SearchBaseModel>?> = mutableStateOf(null)
     val tvSeriesSearchData: MutableState<DataState<SearchBaseModel>?> = mutableStateOf(null)
 
-    fun genreList() {
+    fun genreList(isTvSeries: Boolean) {
         viewModelScope.launch {
-            movieRepo.genreList().onEach {
+            movieRepo.genreList(isTvSeries).onEach {
                 genres.value = it
             }.launchIn(viewModelScope)
         }

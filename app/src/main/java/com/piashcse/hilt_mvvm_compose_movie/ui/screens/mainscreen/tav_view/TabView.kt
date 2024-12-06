@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.piashcse.hilt_mvvm_compose_movie.R
 import com.piashcse.hilt_mvvm_compose_movie.navigation.Screen
+import com.piashcse.hilt_mvvm_compose_movie.ui.screens.mainscreen.MainViewModel
 import com.piashcse.hilt_mvvm_compose_movie.utils.ACTIVE_MOVIE_TAB
 import com.piashcse.hilt_mvvm_compose_movie.utils.ACTIVE_TV_SERIES_TAB
 import com.piashcse.hilt_mvvm_compose_movie.utils.singleTopNavigator
@@ -31,6 +32,7 @@ import kotlinx.coroutines.launch
 fun MovieTvSeriesTabView(
     navigator: NavHostController,
     pagerState: PagerState,
+    mainViewModel: MainViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     val tabs = listOf(stringResource(R.string.movie), stringResource(R.string.tv_series))
@@ -46,9 +48,10 @@ fun MovieTvSeriesTabView(
             Tab(selected = pagerState.currentPage == index, onClick = {
                 if (index == ACTIVE_MOVIE_TAB) {
                     navigator.singleTopNavigator(Screen.NowPlaying.route)
-
+                    mainViewModel.genreList(false)
                 } else if (index == ACTIVE_TV_SERIES_TAB) {
                     navigator.singleTopNavigator(Screen.AiringTodayTvSeries.route)
+                    mainViewModel.genreList(true)
                 }
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(index)
@@ -83,6 +86,7 @@ fun FavoriteTabView(navigator: NavHostController) {
             tabs.forEachIndexed { index, title ->
                 Tab(selected = selectedTabIndex == index, onClick = {
                     selectedTabIndex = index
+
                     if (index == ACTIVE_MOVIE_TAB) {
                         navigator.singleTopNavigator(Screen.FavoriteMovie.route)
                     } else if (index == ACTIVE_TV_SERIES_TAB) {

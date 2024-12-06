@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -58,12 +59,13 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
+@Preview
 fun TvSeriesItems(
-    navController: NavController,
+    navController: NavController = NavController(LocalContext.current),
     tvSeries: LazyPagingItems<TvSeriesItem>,
     genres: ArrayList<Genre>? = null,
-    selectedName: Genre?,
-    onclick: (genreId: Genre?) -> Unit,
+    selectedName: Genre? = null,
+    onclick: (genreId: Genre?) -> Unit = {}
 ) {
     val activity = (LocalContext.current as? Activity)
     val progressBar = remember { mutableStateOf(false) }
@@ -117,7 +119,6 @@ fun TvSeriesItems(
         progressBar.value = it
     }
 }
-
 
 @Composable
 fun MovieItemViewTV(item: TvSeriesItem, navController: NavController) {
@@ -193,6 +194,3 @@ fun SelectableGenreChipTv(
         )
     }
 }
-
-
-

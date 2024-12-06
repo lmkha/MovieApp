@@ -76,7 +76,7 @@ fun MainScreen() {
     }
 
     LaunchedEffect(Unit) {
-        mainViewModel.genreList()
+        mainViewModel.genreList(false)
     }
 
     if (mainViewModel.genres.value is DataState.Success<Genres>) {
@@ -178,17 +178,17 @@ fun MainScreen() {
             }
         }
     }, snackbarHost = {
-        if (isConnected.not()) {
-            Snackbar(
-                action = {}, modifier = Modifier.padding(8.dp)
-            ) {
-                Text(text = stringResource(R.string.there_is_no_internet))
-            }
-        }
+//        if (isConnected.not()) {
+//            Snackbar(
+//                action = {}, modifier = Modifier.padding(8.dp)
+//            ) {
+//                Text(text = stringResource(R.string.there_is_no_internet))
+//            }
+//        }
     }) {
         Box(Modifier.padding(it)) {
             MainView(
-                navController, pagerState, genreList as ArrayList<Genre>?, isFavoriteActive.value
+                navController, pagerState, genreList as ArrayList<Genre>?, isFavoriteActive.value, mainViewModel
             )
             CircularIndeterminateProgressBar(isDisplayed = searchProgressBar.value, 0.1f)
             if (isAppBarVisible.value.not()) {
@@ -221,7 +221,11 @@ fun MainView(
     pagerState: PagerState,
     genres: ArrayList<Genre>? = null,
     isFavorite: Boolean,
+    mainViewModel: MainViewModel
 ) {
+
+//    val genres by mainViewModel.genres.observeAsState()
+
     Column {
         if (currentRoute(navigator) !in listOf(
                 Screen.MovieDetail.route,
@@ -230,7 +234,7 @@ fun MainView(
             )
         ) {
             if (!isFavorite) {
-                MovieTvSeriesTabView(navigator, pagerState)
+                MovieTvSeriesTabView(navigator, pagerState, mainViewModel)
             } else {
                 FavoriteTabView(navigator)
             }
@@ -240,5 +244,6 @@ fun MainView(
         ) { page ->
             Navigation(navigator, genres)
         }
+
     }
 }

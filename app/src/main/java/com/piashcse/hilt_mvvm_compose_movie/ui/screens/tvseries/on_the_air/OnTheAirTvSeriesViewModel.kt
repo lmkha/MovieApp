@@ -24,7 +24,10 @@ class OnTheAirTvSeriesViewModel @Inject constructor(val repo: TvSeriesRepository
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val onTheAirTvSeries = filterData.flatMapLatest {
-        repo.onTheAirTvSeriesPagingDataSource(it?.genreId)
+        if (it?.genreId == null) {
+            repo.onTheAirTvSeriesPagingDataSource(it?.genreId)
+        } else
+            repo.genrePagingDataSource(it?.genreId.toString())
     }.cachedIn(viewModelScope)
 
 }
