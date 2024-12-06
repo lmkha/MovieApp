@@ -51,6 +51,7 @@ import com.piashcse.hilt_mvvm_compose_movie.data.model.moviedetail.MovieDetail
 import com.piashcse.hilt_mvvm_compose_movie.navigation.Screen
 import com.piashcse.hilt_mvvm_compose_movie.ui.component.CircularIndeterminateProgressBar
 import com.piashcse.hilt_mvvm_compose_movie.ui.component.ExpandingText
+import com.piashcse.hilt_mvvm_compose_movie.ui.component.YouTubePlayer
 import com.piashcse.hilt_mvvm_compose_movie.ui.component.text.SubtitlePrimary
 import com.piashcse.hilt_mvvm_compose_movie.ui.component.text.SubtitleSecondary
 import com.piashcse.hilt_mvvm_compose_movie.ui.theme.DefaultBackgroundColor
@@ -98,7 +99,7 @@ fun MovieDetail(navController: NavController = NavController(LocalContext.curren
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp)
+//                        .height(300.dp)
                 ) {
                     CoilImage(
                         modifier = Modifier
@@ -122,6 +123,7 @@ fun MovieDetail(navController: NavController = NavController(LocalContext.curren
                             )
                         },
                     )
+//                    YouTubePlayer(videoId = "y-zc8r3F_QY")
                     IconButton(
                         onClick = {
                             movieFromDb?.let {
@@ -271,6 +273,7 @@ fun RecommendedMovie(navController: NavController?, recommendedMovie: List<Movie
                             )
                         },
                     )
+
                 }
             })
         }

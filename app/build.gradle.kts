@@ -117,4 +117,7 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     annotationProcessor(libs.room.compiler)
+
+//    Youtube Player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
 }
