@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.ApiService
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.GenrePagingDataSource
+import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.TvGenrePagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.movie.NowPlayingMoviePagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.movie.PopularMoviePagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.movie.TopRatedMoviePagingDataSource
@@ -12,6 +13,7 @@ import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_dataso
 import com.piashcse.hilt_mvvm_compose_movie.data.model.Genres
 import com.piashcse.hilt_mvvm_compose_movie.data.model.MovieItem
 import com.piashcse.hilt_mvvm_compose_movie.data.model.SearchBaseModel
+import com.piashcse.hilt_mvvm_compose_movie.data.model.TvSeriesItem
 import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
 import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.ArtistDetail
 import com.piashcse.hilt_mvvm_compose_movie.data.model.moviedetail.MovieDetail
@@ -58,12 +60,15 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    override suspend fun genreList(): Flow<DataState<Genres>> = flow {
+    override suspend fun genreList(isTvSeries: Boolean): Flow<DataState<Genres>> = flow {
         emit(DataState.Loading)
         try {
-            val genreResult = apiService.genreList()
+            val genreResult = if (isTvSeries) {
+                apiService.genreListByTv()
+            } else {
+                apiService.genreList()
+            }
             emit(DataState.Success(genreResult))
-
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

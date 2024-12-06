@@ -4,10 +4,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.ApiService
+import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.GenrePagingDataSource
+import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.TvGenrePagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.tv_series.AiringTodayTvSeriesPagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.tv_series.OnTheAirTvSeriesPagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.tv_series.PopularTvSeriesPagingDataSource
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.remote.paging_datasource.tv_series.TopRatedTvSeriesPagingDataSource
+import com.piashcse.hilt_mvvm_compose_movie.data.model.MovieItem
 import com.piashcse.hilt_mvvm_compose_movie.data.model.SearchBaseModel
 import com.piashcse.hilt_mvvm_compose_movie.data.model.TvSeriesItem
 import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
@@ -31,6 +34,8 @@ class TvSeriesRepository @Inject constructor(
             pagingSourceFactory = { OnTheAirTvSeriesPagingDataSource(apiService, genreId) },
             config = PagingConfig(pageSize = 20)
         ).flow
+
+
 
     override fun popularTvSeriesPagingDataSource(genreId: String?): Flow<PagingData<TvSeriesItem>>  =
         Pager(
@@ -87,4 +92,9 @@ class TvSeriesRepository @Inject constructor(
             emit(DataState.Error(e))
         }
     }
+
+    override fun genrePagingDataSource(genreId: String): Flow<PagingData<TvSeriesItem>> = Pager(
+        pagingSourceFactory = { TvGenrePagingDataSource(apiService, genreId) },
+        config = PagingConfig(pageSize = 20)
+    ).flow
 }

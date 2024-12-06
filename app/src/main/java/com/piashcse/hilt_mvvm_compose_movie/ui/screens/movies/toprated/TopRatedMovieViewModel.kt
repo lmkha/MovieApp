@@ -24,6 +24,9 @@ class TopRatedMovieViewModel @Inject constructor(val repo: MovieRepository) : Vi
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val topRatedMovies = filterData.flatMapLatest {
-        repo.topRatedMoviePagingDataSource(it?.genreId)
+        if (it?.genreId == null) {
+            repo.nowPlayingMoviePagingDataSource(it?.genreId)
+        } else
+            repo.genrePagingDataSource(it?.genreId.toString())
     }.cachedIn(viewModelScope)
 }
