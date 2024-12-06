@@ -49,8 +49,10 @@ interface ApiService {
     @GET("movie/{movieId}")
     suspend fun movieDetail(
         @Path("movieId") movieId: Int, @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("language") language: String = "vi-VN",
+        @Query("append_to_response") appendToResponse: String = "videos"
     ): MovieDetail
+
+
 
     @GET("movie/{movieId}/recommendations")
     suspend fun recommendedMovie(

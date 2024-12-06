@@ -31,5 +31,7 @@ data class MovieItem(
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
-    val voteCount: Int
+    val voteCount: Int,
+    @SerializedName("videos.results[0].key")
+    val videos: String?
 )

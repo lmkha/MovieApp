@@ -1,6 +1,7 @@
 package com.piashcse.hilt_mvvm_compose_movie.data.model.tv_series_detail
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "tvSeriesDetail")
@@ -69,5 +70,7 @@ data class TvSeriesDetail(
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
-    val voteCount: Int
+    val voteCount: Int,
+    @SerializedName("videos.results[0].key")
+    val videos: String?
 )

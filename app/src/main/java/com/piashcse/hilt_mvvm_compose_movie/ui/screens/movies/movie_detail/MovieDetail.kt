@@ -101,29 +101,38 @@ fun MovieDetail(navController: NavController = NavController(LocalContext.curren
                         .fillMaxWidth()
 //                        .height(300.dp)
                 ) {
-                    CoilImage(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        imageModel = { ApiURL.IMAGE_URL.plus(it.poster_path) },
-                        imageOptions = ImageOptions(
-                            contentScale = ContentScale.Crop,
-                            alignment = Alignment.Center,
-                            contentDescription = "Movie detail",
-                            colorFilter = null,
-                        ),
-                        component = rememberImageComponent {
-                            +CircularRevealPlugin(
-                                duration = 800
-                            )
-                            +ShimmerPlugin(
-                                shimmer = Shimmer.Flash(
-                                    baseColor = SecondaryFontColor,
-                                    highlightColor = DefaultBackgroundColor
+                    if (it?.videos != null) {
+                        YouTubePlayer(
+                            videoId = it.videos,
+                            modifier = Modifier
+                                .fillMaxWidth()
+//                                .height(300.dp)
+                        )
+                    } else {
+                        CoilImage(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            imageModel = { ApiURL.IMAGE_URL.plus(it.poster_path) },
+                            imageOptions = ImageOptions(
+                                contentScale = ContentScale.Crop,
+                                alignment = Alignment.Center,
+                                contentDescription = "Movie detail",
+                                colorFilter = null,
+                            ),
+                            component = rememberImageComponent {
+                                +CircularRevealPlugin(
+                                    duration = 800
                                 )
-                            )
-                        },
-                    )
-//                    YouTubePlayer(videoId = "y-zc8r3F_QY")
+                                +ShimmerPlugin(
+                                    shimmer = Shimmer.Flash(
+                                        baseColor = SecondaryFontColor,
+                                        highlightColor = DefaultBackgroundColor
+                                    )
+                                )
+                            },
+                        )
+                    }
+
                     IconButton(
                         onClick = {
                             movieFromDb?.let {
