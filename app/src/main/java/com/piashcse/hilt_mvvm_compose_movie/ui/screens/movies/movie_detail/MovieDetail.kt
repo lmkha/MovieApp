@@ -101,9 +101,9 @@ fun MovieDetail(navController: NavController = NavController(LocalContext.curren
                         .fillMaxWidth()
 //                        .height(300.dp)
                 ) {
-                    if (it?.videos != null) {
+                    if (it?.videos?.results?.size != 0) {
                         YouTubePlayer(
-                            videoId = it.videos,
+                            videoId = it?.videos?.results[0]?.key.toString(),
                             modifier = Modifier
                                 .fillMaxWidth()
 //                                .height(300.dp)

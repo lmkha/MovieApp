@@ -3,8 +3,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.piashcse.hilt_mvvm_compose_movie.data.datasource.local.typeconverter.VideosTypeConverter
+import com.piashcse.hilt_mvvm_compose_movie.data.model.Videos
 
 @Entity(tableName = "tvSeriesDetail")
+@TypeConverters(VideosTypeConverter::class)
 data class TvSeriesDetail(
     @SerializedName("adult")
     val adult: Boolean,
@@ -71,6 +74,6 @@ data class TvSeriesDetail(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int,
-    @SerializedName("videos.results[0].key")
-    val videos: String?
+    @SerializedName("videos")
+    val videos: Videos?
 )

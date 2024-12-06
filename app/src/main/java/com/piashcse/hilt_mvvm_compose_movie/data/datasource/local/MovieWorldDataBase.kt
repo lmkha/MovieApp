@@ -7,10 +7,11 @@ import com.piashcse.hilt_mvvm_compose_movie.data.datasource.local.dao.FavoriteMo
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.local.dao.FavoriteTvSeriesDao
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.local.typeconverter.MovieTypeConverter
 import com.piashcse.hilt_mvvm_compose_movie.data.datasource.local.typeconverter.TvSeriesTypeConverter
+import com.piashcse.hilt_mvvm_compose_movie.data.datasource.local.typeconverter.VideosTypeConverter
 import com.piashcse.hilt_mvvm_compose_movie.data.model.moviedetail.MovieDetail
 import com.piashcse.hilt_mvvm_compose_movie.data.model.tv_series_detail.TvSeriesDetail
 
-@TypeConverters(MovieTypeConverter::class, TvSeriesTypeConverter::class)
+@TypeConverters(MovieTypeConverter::class, TvSeriesTypeConverter::class, VideosTypeConverter::class)
 @Database(version = 1, entities = [MovieDetail::class, TvSeriesDetail::class], exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun getFavoriteMovieDetailDao(): FavoriteMovieDao

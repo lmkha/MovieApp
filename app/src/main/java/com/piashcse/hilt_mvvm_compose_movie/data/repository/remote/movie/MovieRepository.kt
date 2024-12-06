@@ -28,7 +28,13 @@ class MovieRepository @Inject constructor(
     override suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>> = flow {
         emit(DataState.Loading)
         try {
-            val searchResult = apiService.movieDetail(movieId)
+            val searchResult = apiService.movieDetailVN(movieId)
+            val videos = apiService.movieDetail(movieId).videos
+            if (videos != null) {
+                searchResult.videos = videos
+            } else {
+                searchResult.videos?.results = arrayListOf()
+            }
             emit(DataState.Success(searchResult))
 
         } catch (e: Exception) {
